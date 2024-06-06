@@ -6,14 +6,15 @@ public class Usuario {
  *
  * Como atributos la clase tiene:
  *
- * id_direccion que es un identificador unico para cada direccion de cada usuario.
- * calle que es la calle donde reside el usuario a tratar.
- * numero que es el numero de la calle de la residencia.
- * puerta que es el numero de la casa en caso de una casa o el numero y la letra en caso de un piso.
- * provincia que es la provincia donde esta situada la residencia.
- * ciudad que es la ciudad donde esta la provincia y, evidentemente, la residencia.
- * municipio que es el municipio donde se encuentra la residencia.
- * codigoPostal que es el codigo postal del municipio anteriormente mencionado .
+ * "id_usuario", que es un identificador único para cada direccion de cada usuario.
+ * "nombre" que es el nombre del usuario.
+ * "apellido1" y "apellido2" que son los apellidos de los usuarios.
+ * "telefono" que es el número de contacto principal del usuario.
+ * "correoElectronico" que es la dirección con la que se relaciona la cuenta del usuario.
+ * "dni" que es el número nacional de identificación.
+ * "direccion" que es un objeto de tipo Direccion que almacena datos de la residencia del usuario.
+ * "administrador" que es un booleano que determina si el usuario es Cliente (False) o Administrador (True).
+ * "password" que es la contraseña de acceso de la cuenta del usuario.
  */
 	private int id_usuario;
 	private String nombre;
