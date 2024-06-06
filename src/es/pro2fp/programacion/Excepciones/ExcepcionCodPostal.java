@@ -1,6 +1,4 @@
 package es.pro2fp.programacion.Excepciones;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Excepcion que comprueba el patron de un String para que concuerde con el de un codigo postal
