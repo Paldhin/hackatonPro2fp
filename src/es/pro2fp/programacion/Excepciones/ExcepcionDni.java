@@ -27,6 +27,7 @@ public class ExcepcionDni extends Exception {
  * @param dni a validar
  * @return true si el dni tiene el paron correcto
  * @return da una ExcepcionDni
+ * @throws ExcecpionDNI si no sigue el parametro adecuado
  
 public static boolean validarDni(String dni) throws ExcepcionDni {
 
@@ -34,7 +35,7 @@ public static boolean validarDni(String dni) throws ExcepcionDni {
 	Matcher m = p.matcher(dni);
 
 	if (!m.matches()) {
-		throw new ExcepcionDni("El DNI no es correcto");
+		throw new ExcepcionDni("El DNI no sigue el parametro correcto);
 	} else {
 		return true;
 	}
