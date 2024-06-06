@@ -1,13 +1,13 @@
 package es.pro2fp.programacion.clases;
 
-    public class Hoteles {
+    public class Hotel {
 
         private int id;
         private String direccion;
         private String nombre;
 
 
-        public Hoteles(int id, String direccion, String nombre){
+        public Hotel(int id, String direccion, String nombre){
             this.id= id;
             this.direccion=direccion;
             this.nombre = nombre;
