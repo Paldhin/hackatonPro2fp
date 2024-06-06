@@ -184,6 +184,8 @@ public class Direccion {
     @Override
     public String toString (){
         return "\n----------------------" + 
+                "\nDireccion: " + 
+                "\n----------------------" + 
         		"\nCalle: " + this.getCalle() + "\nNúmero: " + this.getNumero() + 
         		"\nPuerta: " + this.getPuerta() + "\nProvincia: " + this.getProvincia() + 
         		"\nCiudad: " + this.getCiudad() + "\nMunicipio: " + this.getMunicipio() +
