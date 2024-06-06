@@ -2,7 +2,7 @@ package es.pro2fp.programacion.clases;
 
 import java.time.LocalDateTime;
 
-public class Habitaciones {
+public class Habitacion {
 
     private int id_habitacion;
     private int numeroHabitacion;
@@ -14,9 +14,9 @@ public class Habitaciones {
     private float precio_habitacion_euros;
     private int hoteles_idHotel;
 
-    public Habitaciones (int id_habitacion, int numeroHabitacion, String tipoHabitacion,
-                         boolean disponible, boolean borrada, LocalDateTime fecha_inicio_vigencia,
-                         LocalDateTime fecha_borrado, float precio_habitacion_euros, int hoteles_idHotel){
+    public Habitacion(int id_habitacion, int numeroHabitacion, String tipoHabitacion,
+                      boolean disponible, boolean borrada, LocalDateTime fecha_inicio_vigencia,
+                      LocalDateTime fecha_borrado, float precio_habitacion_euros, int hoteles_idHotel){
         this.id_habitacion = id_habitacion;
         this.numeroHabitacion = numeroHabitacion;
         this.tipoHabitacion = tipoHabitacion;
@@ -131,18 +131,34 @@ public class Habitaciones {
         return fecha_borrado;
     }
 
+    /**
+     *
+     * @param fecha_borrado
+     */
     public void setFecha_borrado(LocalDateTime fecha_borrado) {
         this.fecha_borrado = fecha_borrado;
     }
 
+    /**
+     *
+     * @return getPrecio_habitacion_euros
+     */
     public float getPrecio_habitacion_euros() {
         return precio_habitacion_euros;
     }
 
+    /**
+     *
+     * @param precio_habitacion_euros
+     */
     public void setPrecio_habitacion_euros(float precio_habitacion_euros) {
         this.precio_habitacion_euros = precio_habitacion_euros;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHoteles_idHotel() {
         return hoteles_idHotel;
     }
