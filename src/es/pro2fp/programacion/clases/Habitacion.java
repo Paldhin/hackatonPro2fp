@@ -157,13 +157,39 @@ public class Habitacion {
 
     /**
      *
-     * @return
+     * @return getHoteles_idHotel
      */
     public int getHoteles_idHotel() {
         return hoteles_idHotel;
     }
 
+    /**
+     *
+     * @param hoteles_idHotel
+     */
     public void setHoteles_idHotel(int hoteles_idHotel) {
         this.hoteles_idHotel = hoteles_idHotel;
+    }
+
+    /**
+     *
+     * @return toString de la clase Habitacion
+     */
+    @Override
+    public String toString (){
+        String tmp = "\n---------------------" +
+                "\nNumero de la Habitación: " + this.getNumeroHabitacion() +
+                "\nTipo de Habitación: " + this.getTipoHabitacion();
+        if (isDisponible()) {
+            tmp = tmp + "\nDisponible: Sí";
+        } else {
+            tmp = tmp + "\nDisponible: No";
+        }
+        if (isBorrada()) {
+            tmp = tmp + "\nBorrada: Sí" + "\nFecha de Inicio de Vigencia: " + this.getFecha_inicio_vigencia() + "Precio: " + this.getPrecio_habitacion_euros();
+        } else {
+            tmp = tmp + "\nBorrada: No" + "\nFecha de Inicio de Vigencia: " + this.getFecha_inicio_vigencia();
+        }
+        return tmp;
     }
 }
