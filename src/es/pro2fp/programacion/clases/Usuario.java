@@ -1,7 +1,21 @@
 package es.pro2fp.programacion.clases;
 
 public class Usuario {
-	
+/**
+ * Esta es la clase Usuario, clase que tiene unos atributos definidos y un unico constructor
+ *
+ * Como atributos la clase tiene:
+ *
+ * id_direccion que es un identificador unico para cada direccion de cada usuario.
+ * calle que es la calle donde reside el usuario a tratar.
+ * numero que es el numero de la calle de la residencia.
+ * puerta que es el numero de la casa en caso de una casa o el numero y la letra en caso de un piso.
+ * provincia que es la provincia donde esta situada la residencia.
+ * ciudad que es la ciudad donde esta la provincia y, evidentemente, la residencia.
+ * municipio que es el municipio donde se encuentra la residencia.
+ * codigoPostal que es el codigo postal del municipio anteriormente mencionado .
+ */
+	private int id_usuario;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
@@ -9,10 +23,11 @@ public class Usuario {
 	private String correoElectronico;
 	private String dni;
 	private Direccion direccion;
+	private String password;
 	private boolean administrador;
 	
 	public Usuario(String nombre, String apellido1, String apellido2, String telefono, String correoElectronico,
-				   String dni, Direccion direccion, boolean administrador) {
+				   String dni, Direccion direccion, boolean administrador, int id_usuario, String password) {
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
@@ -21,6 +36,8 @@ public class Usuario {
 		this.dni = dni;
 		this.direccion = direccion;
 		this.administrador = administrador;
+		this.id_usuario = id_usuario;
+		this.password = password;
 	}
 
 	/**
@@ -159,7 +176,7 @@ public class Usuario {
 					"\nDni: " + this.getDni() +
 					"\nUsuario" +
 					"\n--------------------" +
-					"\nDireccion del integrante del equipo: " + direccion.toString();
+					"\nDireccion del Usuario: " + direccion.toString();
 		}
 	}
 }
