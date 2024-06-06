@@ -32,7 +32,7 @@ public static boolean validarCodPostal(String codPostal) throws ExcepcionCodPost
     Matcher m = p.matcher(codPostal);
 
     if(!m.matches()){
-        throw new ExcepcionCodPostal("El codigo postal no es correcto");
+        throw new ExcepcionCodPostal("El codigo postal no sigue el parametro correcto");
     }else{
         return true;
     }
