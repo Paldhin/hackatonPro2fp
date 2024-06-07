@@ -1,4 +1,5 @@
 package es.pro2fp.programacion.main;
+import es.pro2fp.programacion.Excepciones.ExcepcionCodPostal;
 import es.pro2fp.programacion.Excepciones.ExcepcionDni;
 import es.pro2fp.programacion.Excepciones.ExcepcionTelefono;
 import es.pro2fp.programacion.Utiles.Conexion;
@@ -17,15 +18,7 @@ public class mainDiego {
         //Inicio del Main
         char gestionMenu = 0;
         Scanner sc = new Scanner(System.in);
-        try {
-            Usuario usuario = CrearUsuario();
-            con.insertarUsuario(usuario);
-            usuario = IniciarSesion();
-            System.out.println(usuario.getDni());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        Usuario usuario = null;
 
         //Primera parte del programa: login y register
         do {
@@ -34,14 +27,14 @@ public class mainDiego {
             switch (gestionMenu) {
                 case '1':
                     try {
-                        Usuario usuario = CrearUsuario();
+                        usuario = CrearUsuario();
                         con.insertarUsuario(usuario);
-                    } catch (ExcepcionTelefono | ExcepcionDni e) {
+                    } catch (ExcepcionTelefono | ExcepcionDni | ExcepcionCodPostal e) {
                         throw new RuntimeException(e);
                     }
                     break;
                 case '2':
-                    Usuario usuario = IniciarSesion();
+                    usuario = IniciarSesion();
                     break;
                 case '0':
                     System.out.println("Saliendo del programa...");
@@ -52,12 +45,15 @@ public class mainDiego {
             }
         } while (gestionMenu != '1' && gestionMenu != '2' && gestionMenu != '0');
 
-        do {
-            gestionMenu = sc.next().charAt(0);
-            switch (gestionMenu) {
-                case '1':
-            }
-        } while (gestionMenu != '0');
+        if (gestionMenu == 0) {
+            do {
+                if (usuario.isAdministrador())
+                    gestionMenu = sc.next().charAt(0);
+                switch (gestionMenu) {
+                    case '1':
+                }
+            } while (gestionMenu != '0');
+        }
 
 
 
@@ -108,7 +104,7 @@ public class mainDiego {
         return usuario;
     }
 
-    public static Usuario CrearUsuario() throws ExcepcionTelefono, ExcepcionDni {
+    public static Usuario CrearUsuario() throws ExcepcionTelefono, ExcepcionDni, ExcepcionCodPostal {
         System.out.println("Introduce tu nombre:");
         String nombre = GetString();
 
@@ -147,9 +143,6 @@ public class mainDiego {
         System.out.println("Introduce tu puerta:");
         String puerta = GetString();
 
-        System.out.println("Introduce tu provincia:");
-        String provincia = GetString();
-
         System.out.println("Introduce tu ciudad:");
         String ciudad = GetString();
 
@@ -157,7 +150,7 @@ public class mainDiego {
         String municipio = GetString();
 
         System.out.println("Introduce tu código postal:");
-        String codigoPostal = GetString();
+        String codigoPostal = GetCodPostal();
 
         System.out.println("Introduce tu país:");
         String pais = GetString();
@@ -180,6 +173,13 @@ public class mainDiego {
         return tmp;
     }
 
+    public static String GetCodPostal () throws ExcepcionCodPostal {
+        String codPostal = GetString();
+        boolean bool = ComprobacionCodPostal(codPostal);
+        if (!bool) System.out.println("El Código Postal itnroducido no es válido.");
+        return codPostal;
+    }
+
     public static String GetTelefono () throws ExcepcionTelefono {
         String tlf = GetString();
         boolean bool = ComprobacionTelefono(tlf);
@@ -192,6 +192,16 @@ public class mainDiego {
         boolean bool = ComprobacionDNI(dni);
         if (!bool) System.out.println("El DNI introducido no existe o no es correcto.");
         return dni;
+    }
+
+    public static boolean ComprobacionCodPostal(String codPostal) throws ExcepcionCodPostal{
+        Pattern p = Pattern.compile("[0-9]{5}");
+        Matcher m = p.matcher(codPostal);
+        if(!m.matches()){
+            throw new ExcepcionCodPostal("El codigo postal no sigue el parametro correcto");
+        }else{
+            return true;
+        }
     }
 
     public static boolean ComprobacionDNI(String dni) throws ExcepcionDni {
@@ -214,6 +224,7 @@ public class mainDiego {
             return true;
         }
     }
+
 }
 
 
