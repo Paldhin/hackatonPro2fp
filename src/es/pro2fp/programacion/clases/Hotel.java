@@ -13,7 +13,7 @@ package es.pro2fp.programacion.clases;
          */
 
 //Telefono, e-mail, web, nombre, direccion             
-        private int telefono;
+        private String telefono;
         private String email;
         private String web;
         private int id;
@@ -24,7 +24,7 @@ package es.pro2fp.programacion.clases;
  * Constructor de la clase Direccion que recibe como parametros los siguientes atributos y posteriormente
  * los iguala a los atributos anteriormente mencionados.
  */
-        public Hotel(int telefono, String email, String web, int id, Direccion direccion, String nombre){
+        public Hotel(String telefono, String email, String web, int id, Direccion direccion, String nombre){
             this.telefono = telefono;
             this.email = email;
             this.web = web;
@@ -37,10 +37,10 @@ package es.pro2fp.programacion.clases;
          * 
          * @return
          */
-        public int getTelefono() {
+        public String getTelefono() {
             return telefono;
         }
-        public void setTelefono (int telefono) {
+        public void setTelefono (String telefono) {
             this.telefono = telefono;
         }
         /**

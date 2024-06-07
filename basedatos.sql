@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `Gestor_hoteles`.`Direcciones` (
   `Pais` VARCHAR(450) NULL,
   `Codigo_Postal` VARCHAR(450) NULL,
   `Puerta` VARCHAR(450) NULL,
-  `Ciudad` VARCHAR(45) NULL,
+  `Ciudad` VARCHAR(450) NULL,
   PRIMARY KEY (`idDireccion`),
   UNIQUE INDEX `idDireccion_UNIQUE` (`idDireccion` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `Gestor_hoteles`.`Habitaciones` (
   `TipoHabitacion` VARCHAR(450) NOT NULL,
   `Hoteles_idHotel` INT NOT NULL,
   `Borrada` BIT NOT NULL,
-  `Fecha_inicio_vigencia` DATETIME NOT NULL,
+  `Fecha_inicio_vigencia` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `Fecha_borrado` DATETIME NULL,
   `Precio_habitacion_euros` DECIMAL UNSIGNED NULL,
   PRIMARY KEY (`idHabitacion`),
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `Gestor_hoteles`.`Reservas` (
   `Clientes_idCliente` INT NOT NULL,
   `Habitaciones_idHabitacion` INT NOT NULL,
   `Cancelada` BIT NOT NULL,
-  `Fecha_realizacion` DATETIME NOT NULL,
+  `Fecha_realizacion` DATETIME,
   `Momento_entrada` DATETIME NOT NULL,
   `Momento_salida` DATETIME NOT NULL,
   PRIMARY KEY (`idReservas`),
@@ -138,32 +138,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 DROP TRIGGER IF EXISTS `Gestor_hoteles`.`Habitaciones_AFTER_UPDATE`;
 
-DELIMITER $$
-USE `Gestor_hoteles`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `Gestor_hoteles`.`Habitaciones_AFTER_UPDATE` AFTER UPDATE ON `Habitaciones` FOR EACH ROW
-BEGIN
-	IF NEW.Borrada = 1
-    THEN UPDATE `Gestor_hoteles`.`Habitaciones` SET `Fecha_borrado` = NOW() WHERE (`idHabitacion` = NEW.idHabitacion);
-    END IF;
-END$$
-DELIMITER ;
 
 DROP TRIGGER IF EXISTS `Gestor_hoteles`.`Reservas_AFTER_INSERT`;
 
-DELIMITER $$
-USE `Gestor_hoteles`$$
-CREATE DEFINER=`root`@`localhost` TRIGGER `Reservas_AFTER_INSERT` AFTER INSERT ON `Reservas` FOR EACH ROW BEGIN
-	UPDATE `Gestor_hoteles`.`Reservas` SET `Fecha_realizacion` = NOW() WHERE (`idReservas` = NEW.idReservas);
-END$$
-DELIMITER ;
 
-DROP TRIGGER IF EXISTS `Gestor_hoteles`.`Habitaciones_AFTER_INSERT`;
 
-DELIMITER $$
-USE `Gestor_hoteles`$$
-CREATE DEFINER = CURRENT_USER TRIGGER `Gestor_hoteles`.`Habitaciones_AFTER_INSERT` AFTER INSERT ON `Habitaciones` FOR EACH ROW
-BEGIN
-	UPDATE `Gestor_hoteles`.`Reservas` SET `Fecha_inicio_vigencia` = NOW() WHERE (`idHabitacion` = NEW.idHabitacion);
-END$$
-DELIMITER ;
-
+  
