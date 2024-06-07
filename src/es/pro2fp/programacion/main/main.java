@@ -5,11 +5,15 @@ import es.pro2fp.programacion.clases.Direccion;
 import es.pro2fp.programacion.clases.Habitacion;
 import es.pro2fp.programacion.clases.Usuario;
 import es.pro2fp.programacion.clases.Hotel;
+import es.pro2fp.programacion.clases.Reserva;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Date;
+import java.util.ArrayList;
 
 public class main {
     static Conexion con;
@@ -20,14 +24,17 @@ public class main {
         char gestionMenu = 0;
         Scanner sc = new Scanner(System.in);
         try {
-            // Usuario usuario = CrearUsuario();
-            // con.insertarUsuario(usuario);
+            //Usuario usuario = CrearUsuario();
+            //con.insertarUsuario(usuario);
             // Usuario usuario = IniciarSesion();
             //System.out.println(usuario.getDni());
-            Habitacion habitacion = CrearHabitacion();
-            con.insertHabitacion(habitacion);
+            //Habitacion habitacion = CrearHabitacion();
+            //con.insertHabitacion(habitacion);
             //Hotel hotel = CrearHotel();
             //con.insertHotel(hotel);
+            //Reserva reserva = CrearReserva();
+            //con.hacerReserva(reserva);
+        	buscarReservas();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,6 +192,65 @@ public class main {
         return habitacion;
     }
 
+    public static Reserva CrearReserva(){
+        SimpleDateFormat  sdf = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println("Introduce el id del usuario:");
+        int idUsuario = GetInt();
+        System.out.println("Introduce el id de la habitación:");
+        int idHabitacion = GetInt();
+        System.out.println("Introduce la fecha de entrada en DD/MM/AAAA:");
+        String fecha_tmp = GetString();
+        Date fechaEntrada = new Date();
+        try {
+            fechaEntrada = sdf.parse(fecha_tmp);
+        } catch (Exception e) {
+            System.out.println("Fecha introducida incorrecta.");
+            e.printStackTrace();
+        }
+        System.out.println("Introduce la fecha de salida:");
+        fecha_tmp = GetString();
+        Date fechaSalida = new Date();
+        try {
+            fechaSalida = sdf.parse(fecha_tmp);
+        } catch (Exception e2) {
+            System.out.println("Fecha introducida incorrecta.");
+            e2.printStackTrace();
+        }
+        Habitacion habitacion = con.getHabitacionById(idHabitacion);
+        Usuario usuario = con.getuserById(idUsuario);
+        Reserva reserva = new Reserva(-1,habitacion,usuario,fechaEntrada,fechaSalida);
+        return reserva;
+    }
+
+    public static void buscarReservas() {
+        SimpleDateFormat  sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            System.out.println("Introduce la fecha de entrada en DD/MM/AAAA:");
+            String fecha_tmp = GetString();
+            Date fechaEntrada = new Date();
+            try {
+                fechaEntrada = sdf.parse(fecha_tmp);
+            } catch (Exception e) {
+                System.out.println("Fecha introducida incorrecta.");
+                e.printStackTrace();
+            }
+            System.out.println("Introduce la fecha de salida:");
+            fecha_tmp = GetString();
+            Date fechaSalida = new Date();
+            try {
+                fechaSalida = sdf.parse(fecha_tmp);
+            } catch (Exception e2) {
+                System.out.println("Fecha introducida incorrecta.");
+                e2.printStackTrace();
+            }
+            ArrayList<Habitacion> habs = con.getAllHabitacionesDisponibles(-1, fechaEntrada, fechaSalida);
+            for (Habitacion habitacion : habs) {
+                System.out.println(habitacion.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static String GetString(){
         String tmp;
         do {

@@ -4,6 +4,8 @@ import es.pro2fp.programacion.clases.Direccion;
 import es.pro2fp.programacion.clases.Habitacion;
 import es.pro2fp.programacion.clases.Usuario;
 import es.pro2fp.programacion.clases.Hotel;
+import es.pro2fp.programacion.clases.Reserva;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -77,11 +79,12 @@ public class Conexion {
 		try {
 			if (id_hotel != -1){
 				String query = """
-						SELECT * FROM Habitaciones 
+						SELECT idHabitacion FROM Habitaciones 
 						LEFT JOIN Reservas ON Habitaciones.idHabitacion = Reservas.Habitaciones_idHabitacion
 						WHERE Habitaciones.Hoteles_idHotel = ? 
-						AND ((Reservas.Fecha_entrada > ? OR Reservas.Fecha_salida < ?
-						AND Reservas.Cancelada = 0 ) OR Reservas.idReserva IS NULL)	
+						AND ((Reservas.Momento_entrada > ? OR Reservas.Momento_salida < ?
+						AND Reservas.Cancelada = 0 ) OR Reservas.idReservas IS NULL)
+						GROUP BY idHabitacion
 				""";
 				ps = con.prepareStatement(query);
 				ps.setInt(1, id_hotel);
@@ -89,10 +92,11 @@ public class Conexion {
 				ps.setDate(3, new java.sql.Date(fecha_entrada.getTime()));
 			}else {
 				String query = """
-						SELECT * FROM Habitaciones 
+						SELECT idHabitacion FROM Habitaciones 
 						LEFT JOIN Reservas ON Habitaciones.idHabitacion = Reservas.Habitaciones_idHabitacion
-						WHERE ((Reservas.Fecha_entrada > ? OR Reservas.Fecha_salida < ?
-						AND Reservas.Cancelada = 0) OR Reservas.idReserva IS NULL)	
+						WHERE ((Reservas.Momento_entrada > ? OR Reservas.Momento_salida < ?
+						AND Reservas.Cancelada = 0) OR Reservas.idReservas IS NULL)
+						GROUP BY idHabitacion
 				""";
 				ps = con.prepareStatement(query);
 				ps.setDate(1, new java.sql.Date(fecha_salida.getTime()));
@@ -100,21 +104,12 @@ public class Conexion {
 			}
 			rs = ps.executeQuery();
 			
-			int id;
-			int id_hotels;
-			String tipo;
-			float precio;
-			int numero;
 			ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 			
 			while (rs.next()) {
-				id = rs.getInt("idHabitacion");
-				id_hotels = rs.getInt("Hoteles_idHotel");
-				tipo = rs.getString("TipoHabitacion");
-				precio = rs.getFloat("Precio_habitacion_euros");
-				numero = rs.getInt("NumeroHabitacion");
-				System.out.println(id+" "+id_hotel+" "+tipo+" "+precio);
-				habitaciones.add(new Habitacion(id, numero,tipo, precio,id_hotels));
+				int id_habitacion = rs.getInt("idHabitacion");
+				Habitacion temp = getHabitacionById(id_habitacion);
+				habitaciones.add(temp);
 			}
 			return habitaciones;
 		} catch (Exception e) {
@@ -156,9 +151,13 @@ public class Conexion {
 		}
 	}
 
-	public void hacerReserva(Usuario usuario, Habitacion habitacion, Date fecha_entrada, Date fecha_salida) {
+	public void hacerReserva(Reserva reserva) {
 		try {
 			PreparedStatement ps = con.prepareStatement("INSERT INTO Reservas (Clientes_idCliente, Habitaciones_idHabitacion, Cancelada, Momento_entrada, Momento_salida) VALUES (?,?,?,?,?)");
+			Usuario usuario = reserva.getCliente();
+			Habitacion habitacion = reserva.getHabitacion();
+			Date fecha_entrada = reserva.getFechaEntrada();
+			Date fecha_salida = reserva.getFechaSalida();
 			ps.setInt(1, usuario.getId_usuario());
 			ps.setInt(2, habitacion.getId_habitacion());
 			ps.setBoolean(3, false);
@@ -287,4 +286,49 @@ public class Conexion {
 
 	}
 
+	public Usuario getuserById(int idTs){
+		ResultSet rs;
+		PreparedStatement ps;
+		try {
+			ps = con.prepareStatement("SELECT * FROM Usuario WHERE idUsuario = ?");
+			ps.setInt(1, idTs);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("idUsuario");
+				int id_direccion = rs.getInt("Direcciones_idDireccion");
+				boolean administrador = rs.getBoolean("Administrador");
+				String nombre = rs.getString("Nombre");
+				String apellido1 = rs.getString("Apellido1");
+				String apellido2 = rs.getString("Apellido2");
+				String email = rs.getString("email");
+				String telefono = rs.getString("telefono");
+				String dni = rs.getString("DNI");
+				Direccion direccion = BuscarDireccion(id_direccion);
+				return new Usuario("nombre_usuario",nombre,apellido1,apellido2,telefono,email,dni,direccion,administrador,id,"password");
+			}
+		} catch (Exception e) {
+			System.err.println("Error: "+e);
+		}
+		return null;
+	}
+
+	public Habitacion getHabitacionById(int id){
+		ResultSet rs;
+		PreparedStatement ps;
+		try {
+			ps = con.prepareStatement("SELECT * FROM Habitaciones WHERE idHabitacion = ?");
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				int id_hotel = rs.getInt("Hoteles_idHotel");
+				String tipo = rs.getString("TipoHabitacion");
+				float precio = rs.getFloat("Precio_habitacion_euros");
+				int numero = rs.getInt("NumeroHabitacion");
+				return new Habitacion(id, numero,tipo, precio,id_hotel);
+			}
+		} catch (Exception e) {
+			System.err.println("Error: "+e);
+		}
+		return null;
+	}
 }
