@@ -11,6 +11,11 @@ package es.pro2fp.programacion.clases;
          * Nombre del hotel
          *
          */
+
+//Telefono, e-mail, web, nombre, direccion             
+        private int telefono;
+        private String email;
+        private String web;
         private int id;
         private Direccion direccion;
         private String nombre;
@@ -19,13 +24,53 @@ package es.pro2fp.programacion.clases;
  * Constructor de la clase Direccion que recibe como parametros los siguientes atributos y posteriormente
  * los iguala a los atributos anteriormente mencionados.
  */
- public Hotel(int id, Direccion direccion, String nombre){
+        public Hotel(int telefono, String email, String web, int id, Direccion direccion, String nombre){
+            this.telefono = telefono;
+            this.email = email;
+            this.web = web;
             this.id= id;
             this.direccion=direccion;
             this.nombre = nombre;
 
         }
-
+        /**
+         * 
+         * @return
+         */
+        public int getTelefono() {
+            return telefono;
+        }
+        public void setTelefono (int telefono) {
+            this.telefono = telefono;
+        }
+        /**
+         * 
+         * @return
+         */
+        public String getEmail() {
+            return email;
+        }
+        /**
+         * 
+         * @param email
+         */
+        public void setEmail(String email) {
+            this.email = email;
+        }
+        /**
+         * 
+         * @return
+         */
+        public String getWeb() {
+            return web;
+        }
+        /**
+         * 
+         * @param web
+         */
+        public void setWeb(String web) {
+            this.web = web;
+        }
         /**
          *
          * @return getId
@@ -80,24 +125,14 @@ package es.pro2fp.programacion.clases;
          */
         @Override
         public String toString() {
-            return "\nId: + this.getId());+" +
-                        " \nDireccion:  "+this.getDireccion()+
-                        "\nNombre: "+this.getNombre();
-        }
-
-        public String getTelefonoContacto() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getTelefonoContacto'");
-        }
-
-        public String getEmailContacto() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getEmailContacto'");
-        }
-
-        public String getWeb() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'getWeb'");
+            return "\n-------------------" + 
+                    "\nHotel: " + 
+                    "\n-------------------" + 
+                    "\nNombre: " + this.getNombre() + 
+                    "\nTeléfono: " + this.getTelefono() + 
+                    "\nE-mail: " + this.getEmail() + 
+                    "\nWeb: " + this.getWeb() + 
+                    "\nDirección: " + this.getDireccion();
         }
     }
 

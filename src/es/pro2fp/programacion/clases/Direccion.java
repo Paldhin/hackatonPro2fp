@@ -189,7 +189,7 @@ public class Direccion {
                 "\n----------------------" + 
         		"\nCalle: " + this.getCalle() + "\nNúmero: " + this.getNumero() + 
         		"\nPuerta: " + this.getPuerta() + "\nPais: " + this.getPais() + 
-                "\nProvincia: " + this.getProvincia() + "\nCiudad: " + this.getCiudad() + 
-                "\nMunicipio: " + this.getMunicipio() + "\nCódigo Postal: " + this.getCodigoPostal();
+                "\nCiudad: " + this.getCiudad() + "\nMunicipio: " + this.getMunicipio() + 
+                "\nCódigo Postal: " + this.getCodigoPostal();
     }
 }
