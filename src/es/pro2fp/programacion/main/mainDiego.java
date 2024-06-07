@@ -195,7 +195,7 @@ public class mainDiego {
     }
 
     public static boolean ComprobacionCodPostal(String codPostal) throws ExcepcionCodPostal{
-        Pattern p = Pattern.compile("[0-9]{5}");
+        Pattern p = Pattern.compile("[0-5][1-9]{3}[0-9]");
         Matcher m = p.matcher(codPostal);
         if(!m.matches()){
             throw new ExcepcionCodPostal("El codigo postal no sigue el parametro correcto");
