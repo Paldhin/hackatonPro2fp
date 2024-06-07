@@ -20,7 +20,6 @@ public class Direccion {
     private String calle;
     private String numero;
     private String puerta;
-    private String provincia;
     private String ciudad;
     private String municipio;
     private String codigoPostal;
@@ -35,18 +34,16 @@ public class Direccion {
  * @param calle
  * @param numero
  * @param puerta
- * @param provincia
  * @param ciudad
  * @param municipio
  * @param codigoPostal
  * @param pais
  */
-    public Direccion (int id_direccion, String calle, String numero, String puerta, String provincia, String ciudad, String municipio, String codigoPostal, String pais){
+    public Direccion (int id_direccion, String calle, String numero, String puerta, String ciudad, String municipio, String codigoPostal, String pais){
         this.id_direccion = id_direccion;
         this.calle = calle;
         this.numero = numero;
         this.puerta = puerta;
-        this.provincia = provincia;
         this.ciudad = ciudad;
         this.municipio = municipio;
         this.codigoPostal = codigoPostal;
@@ -115,22 +112,6 @@ public class Direccion {
      */
     public void setPuerta(String puerta) {
         this.puerta = puerta;
-    }
-    /**
-     * Metodo getProvincia que devuelve un dato de tipo String
-     * 
-     * @return provincia que es un atributo de la clase Direccion, que es la provincia donde esta la direccion del usuario
-     */
-    public String getProvincia() {
-        return provincia;
-    }
-    /**
-     * Metodo que recibe como parametro un String y lo iguala al atributo provincia de la clase Direccion
-     * 
-     * @param provincia String que se iguala al atributo de la clase Direccion
-     */
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
     }
     /**
      * Metodo getCiudad que devuelve un dato de tipo String

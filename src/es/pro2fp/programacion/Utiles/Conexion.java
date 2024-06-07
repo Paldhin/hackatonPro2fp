@@ -57,11 +57,10 @@ public class Conexion {
 				String puerta = rs.getString("Puerta");
 				String codigo_postal = rs.getString("Codigo_postal");
 				String ciudad = rs.getString("Ciudad");
-				String provincia = rs.getString("Provincia");
 				String municipio = rs.getString("Municipio");
 				String pais = rs.getString("Pais");
 				System.out.println(idDireccion+" "+calle+" "+numero+" "+puerta+" "+codigo_postal+" "+ciudad+" "+municipio+" "+pais);
-				direccion = new Direccion(idDireccion, calle, numero, puerta, provincia, ciudad, municipio, codigo_postal, pais);
+				direccion = new Direccion(idDireccion, calle, numero, puerta, ciudad, municipio, codigo_postal, pais);
 				hoteles.add(new Hotel(id, direccion, nombre));
 			}
 			return hoteles;
@@ -139,7 +138,7 @@ public class Conexion {
 			ResultSet rs = ps.getGeneratedKeys();
 			rs.next();
 			int idDireccion = rs.getInt(1);
-			ps = con.prepareStatement("INSERT INTO Usuario (Direcciones_idDireccion, Administrador,Nombre_usuario, Password,Nombre,Apellido1,Apellido2, email, telefono) VALUES (?,?,?,?,?,?,?,?,?)");
+			ps = con.prepareStatement("INSERT INTO Usuario (Direcciones_idDireccion, Administrador,Nombre_usuario, Password,Nombre,Apellido1,Apellido2, email, telefono,DNI) VALUES (?,?,?,?,?,?,?,?,?,?)");
 			ps.setInt(1, idDireccion);
 			ps.setBoolean(2, usuario.isAdministrador());
 			ps.setString(3, usuario.getNombreUsuario());
@@ -149,6 +148,7 @@ public class Conexion {
 			ps.setString(7, usuario.getApellido2());
 			ps.setString(8, usuario.getCorreoElectronico());
 			ps.setString(9, usuario.getTelefono());
+			ps.setString(10, usuario.getDni());
 			ps.executeUpdate();
 		} catch (Exception e) {
 			System.err.println("Error: "+e);
@@ -158,7 +158,7 @@ public class Conexion {
 	public void hacerReserva(Usuario usuario, Habitacion habitacion, Date fecha_entrada, Date fecha_salida) {
 		try {
 			PreparedStatement ps = con.prepareStatement("INSERT INTO Reservas (Clientes_idCliente, Habitaciones_idHabitacion, Cancelada, Momento_entrada, Momento_salida) VALUES (?,?,?,?,?)");
-			ps.setInt(1, usuario.getIdUsuario());
+			ps.setInt(1, usuario.getId_usuario());
 			ps.setInt(2, habitacion.getId_habitacion());
 			ps.setBoolean(3, false);
 			ps.setDate(4, new java.sql.Date(fecha_entrada.getTime()));
@@ -219,10 +219,9 @@ public class Conexion {
 				String puerta = rs.getString("Puerta");
 				String codigo_postal = rs.getString("Codigo_postal");
 				String ciudad = rs.getString("Ciudad");
-				String provincia = rs.getString("Provincia");
 				String municipio = rs.getString("Municipio");
 				String pais = rs.getString("Pais");
-				return new Direccion(id_direccion, calle, numero, puerta, provincia, ciudad, municipio, codigo_postal, pais);
+				return new Direccion(id_direccion, calle, numero, puerta, ciudad, municipio, codigo_postal, pais);
 			}
 		} catch (Exception e) {
 			System.err.println("Error: "+e);

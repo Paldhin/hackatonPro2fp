@@ -111,7 +111,6 @@ CREATE TABLE IF NOT EXISTS `Gestor_hoteles`.`Reservas` (
   `idReservas` INT NOT NULL AUTO_INCREMENT,
   `Clientes_idCliente` INT NOT NULL,
   `Habitaciones_idHabitacion` INT NOT NULL,
-  `Activa` BIT NOT NULL,
   `Cancelada` BIT NOT NULL,
   `Fecha_realizacion` DATETIME NOT NULL,
   `Momento_entrada` DATETIME NOT NULL,
@@ -136,3 +135,35 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+DROP TRIGGER IF EXISTS `Gestor_hoteles`.`Habitaciones_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `Gestor_hoteles`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `Gestor_hoteles`.`Habitaciones_AFTER_UPDATE` AFTER UPDATE ON `Habitaciones` FOR EACH ROW
+BEGIN
+	IF NEW.Borrada = 1
+    THEN UPDATE `Gestor_hoteles`.`Habitaciones` SET `Fecha_borrado` = NOW() WHERE (`idHabitacion` = NEW.idHabitacion);
+    END IF;
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `Gestor_hoteles`.`Reservas_AFTER_INSERT`;
+
+DELIMITER $$
+USE `Gestor_hoteles`$$
+CREATE DEFINER=`root`@`localhost` TRIGGER `Reservas_AFTER_INSERT` AFTER INSERT ON `Reservas` FOR EACH ROW BEGIN
+	UPDATE `Gestor_hoteles`.`Reservas` SET `Fecha_realizacion` = NOW() WHERE (`idReservas` = NEW.idReservas);
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `Gestor_hoteles`.`Habitaciones_AFTER_INSERT`;
+
+DELIMITER $$
+USE `Gestor_hoteles`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `Gestor_hoteles`.`Habitaciones_AFTER_INSERT` AFTER INSERT ON `Habitaciones` FOR EACH ROW
+BEGIN
+	UPDATE `Gestor_hoteles`.`Reservas` SET `Fecha_inicio_vigencia` = NOW() WHERE (`idHabitacion` = NEW.idHabitacion);
+END$$
+DELIMITER ;
+

@@ -112,8 +112,6 @@ public class main {
         String numero = GetString();
         System.out.println("Introduce tu puerta:");
         String puerta = GetString();
-        System.out.println("Introduce tu provincia:");
-        String provincia = GetString();
         System.out.println("Introduce tu ciudad:");
         String ciudad = GetString();
         System.out.println("Introduce tu municipio:");
@@ -124,7 +122,7 @@ public class main {
         System.out.println("Introduce tu país:");
         String pais = GetString();
 
-        Direccion direccion = new Direccion(-1, calle,numero,puerta,provincia,ciudad,municipio,codigoPostal,pais);
+        Direccion direccion = new Direccion(-1, calle,numero,puerta,ciudad,municipio,codigoPostal,pais);
         Usuario usuarioTMP = new Usuario(nombre_usuario,nombre, apellido1, apellido2, telefono,email,dni,direccion,administrador,-1,password);
         
         return usuarioTMP;
