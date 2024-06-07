@@ -34,7 +34,7 @@ public class ExcepcionTelefono extends Exception{
  
 public static boolean comprobacionTelefono (String telefono) throws ExcepcionTelefono{
     
-    Pattern p = Pattern.compile("[6-7]{8}");
+    Pattern p = Pattern.compile("[6-7]{1},[0-9]{7}");
 	Matcher m = p.matcher(telefono);
 
 	if (!m.matches()) {
