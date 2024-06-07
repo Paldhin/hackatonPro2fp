@@ -3,7 +3,7 @@ package es.pro2fp.programacion.Utiles;
 import es.pro2fp.programacion.clases.Direccion;
 import es.pro2fp.programacion.clases.Habitacion;
 import es.pro2fp.programacion.clases.Usuario;
-import es.pro2fp.programacion.clases.Hoteles;
+import es.pro2fp.programacion.clases.Hotel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ public class Conexion {
 	}
 	
 	
-	public ArrayList<Hoteles> getAllHoteles() {
+	public ArrayList<Hotel> getAllHoteles() {
 		ResultSet rs;
 		PreparedStatement ps;
 		try {
@@ -39,7 +39,7 @@ public class Conexion {
 			String email_contacto;
 			String telefono_contacto;
 			String web;
-			ArrayList<Hoteles> hoteles = new ArrayList<Hoteles>();
+			ArrayList<Hotel> hoteles = new ArrayList<Hotel>();
 			Direccion direccion;
 
 			
@@ -57,12 +57,12 @@ public class Conexion {
 				String puerta = rs.getString("Puerta");
 				String codigo_postal = rs.getString("Codigo_postal");
 				String ciudad = rs.getString("Ciudad");
-				String provincia = "Madrid"; // TODO cambiar
+				String provincia = rs.getString("Provincia");
 				String municipio = rs.getString("Municipio");
 				String pais = rs.getString("Pais");
 				System.out.println(idDireccion+" "+calle+" "+numero+" "+puerta+" "+codigo_postal+" "+ciudad+" "+municipio+" "+pais);
-				direccion = new Direccion(idDireccion, calle, numero, puerta, provincia, ciudad, municipio, codigo_postal);
-				hoteles.add(new Hoteles(id, direccion, nombre));
+				direccion = new Direccion(idDireccion, calle, numero, puerta, provincia, ciudad, municipio, codigo_postal, pais);
+				hoteles.add(new Hotel(id, direccion, nombre));
 			}
 			return hoteles;
 		} catch (Exception e) {
@@ -81,7 +81,7 @@ public class Conexion {
 						LEFT JOIN Reservas ON Habitaciones.idHabitacion = Reservas.Habitaciones_idHabitacion
 						WHERE Habitaciones.Hoteles_idHotel = ? 
 						AND ((Reservas.Fecha_entrada > ? OR Reservas.Fecha_salida < ?
-						AND Reservas.Cancelada = 0 AND Reservas.Activa = 1) OR Reservas.idReserva IS NULL)	
+						AND Reservas.Cancelada = 0 ) OR Reservas.idReserva IS NULL)	
 				""";
 				ps = con.prepareStatement(query);
 				ps.setInt(1, id_hotel);
@@ -92,7 +92,7 @@ public class Conexion {
 						SELECT * FROM Habitaciones 
 						LEFT JOIN Reservas ON Habitaciones.idHabitacion = Reservas.Habitaciones_idHabitacion
 						WHERE ((Reservas.Fecha_entrada > ? OR Reservas.Fecha_salida < ?
-						AND Reservas.Cancelada = 0 AND Reservas.Activa = 1) OR Reservas.idReserva IS NULL)	
+						AND Reservas.Cancelada = 0) OR Reservas.idReserva IS NULL)	
 				""";
 				ps = con.prepareStatement(query);
 				ps.setDate(1, new java.sql.Date(fecha_salida.getTime()));
@@ -154,4 +154,81 @@ public class Conexion {
 			System.err.println("Error: "+e);
 		}
 	}
+
+	public void hacerReserva(Usuario usuario, Habitacion habitacion, Date fecha_entrada, Date fecha_salida) {
+		try {
+			PreparedStatement ps = con.prepareStatement("INSERT INTO Reservas (Clientes_idCliente, Habitaciones_idHabitacion, Cancelada, Momento_entrada, Momento_salida) VALUES (?,?,?,?,?)");
+			ps.setInt(1, usuario.getIdUsuario());
+			ps.setInt(2, habitacion.getId_habitacion());
+			ps.setBoolean(3, false);
+			ps.setDate(4, new java.sql.Date(fecha_entrada.getTime()));
+			ps.setDate(5, new java.sql.Date(fecha_salida.getTime()));
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.err.println("Error: "+e);
+		}
+	}
+
+	public void cancelarReserva(int id_reserva) {
+		try {
+			PreparedStatement ps = con.prepareStatement("UPDATE Reservas SET Cancelada = 1 WHERE idReserva = ?");
+			ps.setInt(1, id_reserva);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.err.println("Error: "+e);
+		}
+	}
+
+	public Usuario buscarUsuario(String nombre_usuario, String password) {
+		ResultSet rs;
+		PreparedStatement ps;
+		try {
+			ps = con.prepareStatement("SELECT * FROM Usuario WHERE Nombre_usuario = ? AND Password = ?");
+			ps.setString(1, nombre_usuario);
+			ps.setString(2, password);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("idUsuario");
+				int id_direccion = rs.getInt("Direcciones_idDireccion");
+				boolean administrador = rs.getBoolean("Administrador");
+				String nombre = rs.getString("Nombre");
+				String apellido1 = rs.getString("Apellido1");
+				String apellido2 = rs.getString("Apellido2");
+				String email = rs.getString("email");
+				String telefono = rs.getString("telefono");
+				String dni = rs.getString("dni");
+				Direccion direccion = BuscarDireccion(id_direccion);
+				return new Usuario(nombre,apellido1,apellido2,telefono,email,dni,direccion,administrador,id,password);
+			}
+		} catch (Exception e) {
+			System.err.println("Error: "+e);
+		}
+		return null;
+	}
+
+	public Direccion BuscarDireccion(int id_direccion) {
+		ResultSet rs;
+		PreparedStatement ps;
+		try {
+			ps = con.prepareStatement("SELECT * FROM Direcciones WHERE idDireccion = ?");
+			ps.setInt(1, id_direccion);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String calle = rs.getString("Calle");
+				String numero = rs.getString("Numero");
+				String puerta = rs.getString("Puerta");
+				String codigo_postal = rs.getString("Codigo_postal");
+				String ciudad = rs.getString("Ciudad");
+				String provincia = rs.getString("Provincia");
+				String municipio = rs.getString("Municipio");
+				String pais = rs.getString("Pais");
+				return new Direccion(id_direccion, calle, numero, puerta, provincia, ciudad, municipio, codigo_postal, pais);
+			}
+		} catch (Exception e) {
+			System.err.println("Error: "+e);
+		}
+		return null;
+	}
+
+	
 }

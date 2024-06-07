@@ -4,11 +4,12 @@ import es.pro2fp.programacion.Utiles.Conexion;
 import es.pro2fp.programacion.clases.Usuario;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class main {
     public static void main(String[] args) {
         Conexion con = new Conexion();
-        con.getAllHoteles();
 
         //Inicio del Main
         char gestionMenu = 0;
@@ -55,7 +56,7 @@ public class main {
                 ----------------------""");
     }
 
-    public static Usuario CrearUsuario() {
+    public static Usuario CrearUsuario() throws ExcepcionTelefono {
         System.out.println("Introduce tu nombre:");
         String nombre = GetString();
         System.out.println("Introduce tu primer apellido:");
@@ -63,8 +64,10 @@ public class main {
         System.out.println("Introduce tu segundo apellido:");
         String apellido2 = GetString();
         System.out.println("Introduce un numero de teléfono:");
-        String telefono =
-        Usuario usuarioTMP = new Usuario(nombre, apellido1, apellido2, );
+        String telefono = GetTelefono();
+        System.out.println("Introduce un correo electrónico:");
+        String email = GetString();
+        Usuario usuarioTMP = new Usuario(nombre, apellido1, apellido2, telefono, );
         return usuarioTMP;
     }
 
@@ -73,21 +76,28 @@ public class main {
         do {
             Scanner sc = new Scanner(System.in);
             tmp = sc.nextLine();
-            if (!tmp.trim().isEmpty()) {
-            } else System.out.println("Este campo no puede estar vacío.");
+            if (tmp.trim().isEmpty()) {
+                System.out.println("Este campo no puede estar vacío.");
+            }
         }while (tmp.trim().isEmpty());
         return tmp;
     }
 
-    public static String GetTelefono() throws ExcepcionTelefono {
-        String tmp;
-        do {
-            Scanner sc = new Scanner(System.in);
-            tmp = sc.nextLine();
-            if (!tmp.trim().isEmpty()) {
-            } else System.out.println("Este campo no puede estar vacío.");
-        }while (tmp.trim().isEmpty());
-        return tmp;
+    public static String GetTelefono () throws ExcepcionTelefono {
+        String tlf = GetString();
+        boolean bool = comprobacionTelefono(tlf);
+        if (!bool) System.out.println("El teléfono introducido no existe.");
+        return tlf;
+    }
+
+    public static boolean comprobacionTelefono (String telefono) throws ExcepcionTelefono {
+        Pattern p = Pattern.compile("[6-7]{1},[0-9]{7}");
+        Matcher m = p.matcher(telefono);
+        if (!m.matches()) {
+            throw new ExcepcionTelefono("El telefono no sigue el parametro correcto");
+        } else {
+            return true;
+        }
     }
 }
 
