@@ -5,7 +5,7 @@ package es.pro2fp.programacion.Excepciones;
  * saltará una excepción.
  * Se usa en la clase "usuario" y se elevará al programa principal.
  */
-public class ExcepcionCorreo extends Exception{
+public class ExcepcionWeb extends Exception{
     /*
     Constructor de una excepción de Correo que, si no sigue la estructura correcta,
     lanza una excepción de tipo ExcepcionCorreo.
@@ -13,7 +13,7 @@ public class ExcepcionCorreo extends Exception{
     @param msg
      */
 
-    public ExcepcionCorreo(String msg) {
+    public ExcepcionWeb(String msg) {
         super(msg);
     }
 }
@@ -23,22 +23,21 @@ public class ExcepcionCorreo extends Exception{
 Este será el método de la excepción para copiar y pegar a donde se quiera
 
 /**
- * Método que valida un Correo mediante un patrón. Si este no encaja con la
+ * Método que valida una dirección Web mediante un patrón. Si este no encaja con la
  * estructura predefinida, saltará una excepción
- * @param correo
+ * @param web
  * @return true si el Correo respeta el parámetro
- * @throws ExpecionTelefono si no se respeta el parámetro
+ * @throws ExpecionWeb si no se respeta el parámetro
 
-public static boolean comprobacionCorreo (String correo) throws ExcepcionCorreo{
+public static boolean comprobacionWeb (String web) throws ExcepcionWeb{
 
-    Pattern p = Pattern.compile("[a-z, 0-9, A-Z] {1-30} [@gmail.com]");
-	Matcher m = p.matcher(correo);
+    Pattern p = Pattern.compile("[www][a-z, A-Z, 0-9]{1-99}[.com]");
+	Matcher m = p.matcher(web);
 
 	if (!m.matches()) {
-		throw new ExcepcionCorreo("La dirección de correo introducida no sigue el parámetro correcto");
+		throw new ExcepcionCorreo("La dirección web introducida no sigue el parámetro correcto");
 	} else {
 		return true;
 }
 
  */
-
