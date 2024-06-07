@@ -84,6 +84,21 @@ package es.pro2fp.programacion.clases;
                         " \nDireccion:  "+this.getDireccion()+
                         "\nNombre: "+this.getNombre();
         }
+
+        public String getTelefonoContacto() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getTelefonoContacto'");
+        }
+
+        public String getEmailContacto() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getEmailContacto'");
+        }
+
+        public String getWeb() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getWeb'");
+        }
     }
 
 

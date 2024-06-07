@@ -47,30 +47,34 @@ public void insertHotel(Hotel hotel) throws SQLException{
         ps = con.prepareStatement("INSERT INTO `Gestor_hoteles`.`Hoteles` (`Direcciones_idDireccion`, `Nombre`, `Telefono_contacto`, `Email_contacto`, `Web`) VALUES (?, ?, ?, ?, ?);");
         ps.setInt(1,direccionHotel);
         ps.setString(2,hotel.getNombre());
-        ps.setString(3,hotel.getTelefonoContacto);
-        ps.setString(4, hotel.getEmailContacto);
-        ps.setString(5, hotel.getWeb);
+        ps.setString(3,hotel.getTelefonoContacto());
+        ps.setString(4, hotel.getEmailContacto());
+        ps.setString(5, hotel.getWeb());
     } catch (Exception e) {
        System.err.println("Error: "+e);
     }
 }
 
+/**
+ * Metodo que inserta una habitacion a la tabla habitaciones de SQL
+ * @param habitacion
+ * @throws SQLException
+ */
 public void insertHabitacion(Habitacion habitacion) throws SQLException{
     ResultSet rs;
     PreparedStatement ps;
     //Añadimos la habitacion a la tabla habitaciones
     try {
-        ps = con.prepareStatement();
-        
+        ps = con.prepareStatement("INSERT INTO `Gestor_hoteles`.`Habitaciones` (`NumeroHabitacion`, `TipoHabitacion`, `Hoteles_idHotel`, `Borrada`, `Precio_habitacion_euros`) VALUES (?,?,?,?,?);");
+        ps.setInt(1, habitacion.getNumeroHabitacion());
+        ps.setString(2, habitacion.getTipoHabitacion());
+        ps.setInt(3,habitacion.getHoteles_idHotel());
+        ps.setBoolean(4, false);
+        ps.setFloat(5,habitacion.getPrecio_habitacion_euros());
     } catch (Exception e) {
-        
+        System.err.println("Error: "+e);
     }
 
 
 }
-
-
-
-
-
 }
