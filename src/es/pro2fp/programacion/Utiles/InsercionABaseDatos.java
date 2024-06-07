@@ -24,7 +24,7 @@ public void insertHotel(Hotel hotel) throws SQLException{
     ResultSet rs;
     PreparedStatement ps;
 
-    //Añadimos la direccion del hotel
+    //Añadimos la direccion del hotel a la tabla direccion
     try {
         ps = con.prepareStatement("INSERT INTO `Gestor_hoteles`.`Direcciones` (`Calle`, `Numero`, `Municipio`, `Pais`, `Codigo_Postal`, `Puerta`, `Ciudad`) VALUES (?, ?, ?, ?, ?, ?, ?);");
         ps.setString(1, hotel.getDireccion().getCalle());
@@ -38,7 +38,14 @@ public void insertHotel(Hotel hotel) throws SQLException{
        System.err.println("Error: "+e);
     }
     
+    //Recogemos la clave foranea de la direccion que acabamos de añadir a la tabla direccion
+    try {
+        int direccionHotel = rs.getInt("SELECT idDireccion FROM direcciones WHERE idDireccion = @@identity;");//Comprobar si funciona el @@Identity
+    } catch (Exception e) {
+        System.err.println("Error: "+e);
+    }
     
+    //Añadimos el hotel 
 
 
 }
