@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import es.pro2fp.programacion.clases.Habitacion;
 import es.pro2fp.programacion.clases.Hotel;
 
 public class InsercionABaseDatos {
@@ -20,35 +21,54 @@ public class InsercionABaseDatos {
 		}	
 	}
 
+    /**
+     * Metodo que inserta un hotel en una base de datos salta una excepcion si hay algun error con las consultas SQL
+     * @param hotel
+     * @throws SQLException
+     */
 public void insertHotel(Hotel hotel) throws SQLException{
     ResultSet rs;
     PreparedStatement ps;
 
     //Añadimos la direccion del hotel a la tabla direccion
     try {
+        //Insertamos la direccion del hotel en la tabla direccion
         ps = con.prepareStatement("INSERT INTO `Gestor_hoteles`.`Direcciones` (`Calle`, `Numero`, `Municipio`, `Pais`, `Codigo_Postal`, `Puerta`, `Ciudad`) VALUES (?, ?, ?, ?, ?, ?, ?);");
         ps.setString(1, hotel.getDireccion().getCalle());
         ps.setString(2, hotel.getDireccion().getNumero());
         ps.setString(3, hotel.getDireccion().getMunicipio());
-        ps.setString(4, hotel.getDireccion().getPais);
+        ps.setString(4, hotel.getDireccion().getPais());
         ps.setString(5, hotel.getDireccion().getCodigoPostal());
         ps.setString(6, hotel.getDireccion().getPuerta());
         ps.setString(7, hotel.getDireccion().getCiudad());
+        rs = ps.executeQuery();
+        int direccionHotel = rs.getInt("SELECT idDireccion FROM direcciones WHERE idDireccion = @@identity;");//Comprobar si funciona el @@Identity
+        //Insercion del hotel en la tabla de hotel
+        ps = con.prepareStatement("INSERT INTO `Gestor_hoteles`.`Hoteles` (`Direcciones_idDireccion`, `Nombre`, `Telefono_contacto`, `Email_contacto`, `Web`) VALUES (?, ?, ?, ?, ?);");
+        ps.setInt(1,direccionHotel);
+        ps.setString(2,hotel.getNombre());
+        ps.setString(3,hotel.getTelefonoContacto);
+        ps.setString(4, hotel.getEmailContacto);
+        ps.setString(5, hotel.getWeb);
     } catch (Exception e) {
        System.err.println("Error: "+e);
     }
-    
-    //Recogemos la clave foranea de la direccion que acabamos de añadir a la tabla direccion
+}
+
+public void insertHabitacion(Habitacion habitacion) throws SQLException{
+    ResultSet rs;
+    PreparedStatement ps;
+    //Añadimos la habitacion a la tabla habitaciones
     try {
-        int direccionHotel = rs.getInt("SELECT idDireccion FROM direcciones WHERE idDireccion = @@identity;");//Comprobar si funciona el @@Identity
+        ps = con.prepareStatement();
+        
     } catch (Exception e) {
-        System.err.println("Error: "+e);
+        
     }
-    
-    //Añadimos el hotel 
 
 
 }
+
 
 
 
