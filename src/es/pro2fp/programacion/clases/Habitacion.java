@@ -8,11 +8,12 @@ public class Habitacion {
     private float precio_habitacion_euros;
     private int hoteles_idHotel;
 
-    public Habitacion(int id_habitacion, int numeroHabitacion, String tipoHabitacion, float precio_habitacion_euros){
+    public Habitacion(int id_habitacion, int numeroHabitacion, String tipoHabitacion, float precio_habitacion_euros,int hoteles_idHotel){
         this.id_habitacion = id_habitacion;
         this.numeroHabitacion = numeroHabitacion;
         this.tipoHabitacion = tipoHabitacion;
         this.precio_habitacion_euros = precio_habitacion_euros;
+        this.hoteles_idHotel = hoteles_idHotel;
     }
 
     /**

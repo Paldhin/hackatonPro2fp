@@ -103,16 +103,15 @@ public class Conexion {
 			int id;
 			int id_hotels;
 			String tipo;
-			double precio;
+			float precio;
 			int numero;
-			boolean disponible;
 			ArrayList<Habitacion> habitaciones = new ArrayList<Habitacion>();
 			
 			while (rs.next()) {
 				id = rs.getInt("idHabitacion");
 				id_hotels = rs.getInt("Hoteles_idHotel");
 				tipo = rs.getString("TipoHabitacion");
-				precio = rs.getDouble("Precio_habitacion_euros");
+				precio = rs.getFloat("Precio_habitacion_euros");
 				numero = rs.getInt("NumeroHabitacion");
 				System.out.println(id+" "+id_hotel+" "+tipo+" "+precio);
 				habitaciones.add(new Habitacion(id, numero,tipo, precio,id_hotels));
@@ -122,5 +121,37 @@ public class Conexion {
 			System.err.println("Error: "+e);
 		}
 		return null;
+	}
+
+	public void insertarUsuario(Usuario usuario) {
+		try {
+			// Insertar direccion
+			PreparedStatement ps = con.prepareStatement("INSERT INTO Direcciones (Calle, Numero, Municipio, Pais, Codigo_Postal, Puerta, Ciudad) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			
+			ps.setString(1, usuario.getDireccion().getCalle());
+			ps.setString(2, usuario.getDireccion().getNumero());
+			ps.setString(3, usuario.getDireccion().getMunicipio());
+			ps.setString(4, usuario.getDireccion().getPais());
+			ps.setString(5, usuario.getDireccion().getCodigoPostal());
+			ps.setString(6, usuario.getDireccion().getPuerta());
+			ps.setString(7, usuario.getDireccion().getCiudad());
+			ps.executeUpdate();
+			ResultSet rs = ps.getGeneratedKeys();
+			rs.next();
+			int idDireccion = rs.getInt(1);
+			ps = con.prepareStatement("INSERT INTO Usuario (Direcciones_idDireccion, Administrador,Nombre_usuario, Password,Nombre,Apellido1,Apellido2, email, telefono) VALUES (?,?,?,?,?,?,?,?,?)");
+			ps.setInt(1, idDireccion);
+			ps.setBoolean(2, usuario.isAdministrador());
+			ps.setString(3, usuario.getNombreUsuario());
+			ps.setString(4, usuario.getPassword());
+			ps.setString(5, usuario.getNombre());
+			ps.setString(6, usuario.getApellido1());
+			ps.setString(7, usuario.getApellido2());
+			ps.setString(8, usuario.getCorreoElectronico());
+			ps.setString(9, usuario.getTelefono());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.err.println("Error: "+e);
+		}
 	}
 }
