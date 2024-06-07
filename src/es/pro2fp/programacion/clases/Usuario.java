@@ -184,6 +184,16 @@ public class Usuario {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
+
+	/**
+	 * Método que retorna el DNI del usuario
+	 *
+	 * @return getDni
+	 */
+	public String getPassword() {
+		return password;
+	}
+
 	/**
 	 * Metodo toString de la clase Usuario
 	 * 
