@@ -198,7 +198,7 @@ public class Conexion {
 				String telefono = rs.getString("telefono");
 				String dni = rs.getString("dni");
 				Direccion direccion = BuscarDireccion(id_direccion);
-				return new Usuario(nombre,apellido1,apellido2,telefono,email,dni,direccion,administrador,id,password);
+				return new Usuario(nombre_usuario,nombre,apellido1,apellido2,telefono,email,dni,direccion,administrador,id,password);
 			}
 		} catch (Exception e) {
 			System.err.println("Error: "+e);
@@ -230,5 +230,5 @@ public class Conexion {
 		return null;
 	}
 
-	
+
 }
