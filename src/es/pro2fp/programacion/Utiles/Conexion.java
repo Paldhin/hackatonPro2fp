@@ -197,7 +197,7 @@ public class Conexion {
 				String email = rs.getString("email");
 				String telefono = rs.getString("telefono");
 				String dni = rs.getString("dni");
-				Direccion direccion = getDireccion(id_direccion);
+				Direccion direccion = BuscarDireccion(id_direccion);
 				return new Usuario(nombre,apellido1,apellido2,telefono,email,dni,direccion,administrador,id,password);
 			}
 		} catch (Exception e) {
@@ -206,7 +206,7 @@ public class Conexion {
 		return null;
 	}
 
-	public Direccion getDireccion(int id_direccion) {
+	public Direccion BuscarDireccion(int id_direccion) {
 		ResultSet rs;
 		PreparedStatement ps;
 		try {
@@ -229,4 +229,6 @@ public class Conexion {
 		}
 		return null;
 	}
+
+	
 }
