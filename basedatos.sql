@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `Gestor_hoteles`.`Reservas` (
   `Clientes_idCliente` INT NOT NULL,
   `Habitaciones_idHabitacion` INT NOT NULL,
   `Cancelada` BIT NOT NULL,
-  `Fecha_realizacion` DATETIME,
+  `Fecha_realizacion` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `Momento_entrada` DATETIME NOT NULL,
   `Momento_salida` DATETIME NOT NULL,
   PRIMARY KEY (`idReservas`),
