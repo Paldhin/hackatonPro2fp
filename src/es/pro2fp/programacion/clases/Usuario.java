@@ -17,6 +17,7 @@ public class Usuario {
  * "password" que es la contraseña encriptada de acceso de la cuenta del usuario.
  */
 	private int id_usuario;
+	private String nombreUsuario;
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
@@ -43,9 +44,10 @@ public class Usuario {
  * @param id_usuario
  * @param password
  */	
-	public Usuario(String nombre, String apellido1, String apellido2, String telefono, String correoElectronico,
-				   String dni, Direccion direccion, boolean administrador, int id_usuario, String password) {
-		this.nombre = nombre;
+	public Usuario(String nombreUsuario, String nombre, String apellido1, String apellido2, String telefono, String correoElectronico,
+                   String dni, Direccion direccion, boolean administrador, int id_usuario, String password) {
+        this.nombreUsuario = nombreUsuario;
+        this.nombre = nombre;
 		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
 		this.telefono = telefono;
@@ -56,6 +58,9 @@ public class Usuario {
 		this.id_usuario = id_usuario;
 		this.password = password;
 	}
+
+
+	public String getNombreUsuario(){return nombreUsuario;}
 	/**
 	 * Metodo getApellido2 que devuelve un dato de tipo String
 	 * 
