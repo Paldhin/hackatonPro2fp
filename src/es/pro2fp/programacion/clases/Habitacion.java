@@ -1,29 +1,17 @@
 package es.pro2fp.programacion.clases;
 
-import java.time.LocalDateTime;
-
 public class Habitacion {
 
     private int id_habitacion;
     private int numeroHabitacion;
     private String tipoHabitacion;
-    private boolean disponible;
-    private boolean borrada;
-    private LocalDateTime fecha_inicio_vigencia;
-    private LocalDateTime fecha_borrado;
     private float precio_habitacion_euros;
     private int hoteles_idHotel;
 
-    public Habitacion(int id_habitacion, int numeroHabitacion, String tipoHabitacion,
-                      boolean disponible, boolean borrada, LocalDateTime fecha_inicio_vigencia,
-                      LocalDateTime fecha_borrado, float precio_habitacion_euros, int hoteles_idHotel){
+    public Habitacion(int id_habitacion, int numeroHabitacion, String tipoHabitacion, float precio_habitacion_euros){
         this.id_habitacion = id_habitacion;
         this.numeroHabitacion = numeroHabitacion;
         this.tipoHabitacion = tipoHabitacion;
-        this.disponible = disponible;
-        this.borrada = borrada;
-        this.fecha_borrado = fecha_borrado;
-        this.fecha_inicio_vigencia = fecha_inicio_vigencia;
         this.precio_habitacion_euros = precio_habitacion_euros;
     }
 
@@ -77,70 +65,6 @@ public class Habitacion {
 
     /**
      *
-     * @return isDisponible
-     */
-    public boolean isDisponible() {
-        return disponible;
-    }
-
-    /**
-     *
-     * @param disponible
-     */
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-
-    /**
-     *
-     * @return isBorrada
-     */
-    public boolean isBorrada() {
-        return borrada;
-    }
-
-    /**
-     *
-     * @param borrada
-     */
-    public void setBorrada(boolean borrada) {
-        this.borrada = borrada;
-    }
-
-    /**
-     *
-     * @return getFecha_inicio_vigencia
-     */
-    public LocalDateTime getFecha_inicio_vigencia() {
-        return fecha_inicio_vigencia;
-    }
-
-    /**
-     *
-     * @param fecha_inicio_vigencia
-     */
-    public void setFecha_inicio_vigencia(LocalDateTime fecha_inicio_vigencia) {
-        this.fecha_inicio_vigencia = fecha_inicio_vigencia;
-    }
-
-    /**
-     *
-     * @return getFecha_borrado
-     */
-    public LocalDateTime getFecha_borrado() {
-        return fecha_borrado;
-    }
-
-    /**
-     *
-     * @param fecha_borrado
-     */
-    public void setFecha_borrado(LocalDateTime fecha_borrado) {
-        this.fecha_borrado = fecha_borrado;
-    }
-
-    /**
-     *
      * @return getPrecio_habitacion_euros
      */
     public float getPrecio_habitacion_euros() {
@@ -177,19 +101,8 @@ public class Habitacion {
      */
     @Override
     public String toString (){
-        String tmp = "\n---------------------" +
-                "\nNumero de la Habitación: " + this.getNumeroHabitacion() +
-                "\nTipo de Habitación: " + this.getTipoHabitacion();
-        if (isDisponible()) {
-            tmp = tmp + "\nDisponible: Sí";
-        } else {
-            tmp = tmp + "\nDisponible: No";
-        }
-        if (isBorrada()) {
-            tmp = tmp + "\nBorrada: Sí" + "\nFecha de Inicio de Vigencia: " + this.getFecha_inicio_vigencia() + "Precio: " + this.getPrecio_habitacion_euros();
-        } else {
-            tmp = tmp + "\nBorrada: No" + "\nFecha de Inicio de Vigencia: " + this.getFecha_inicio_vigencia();
-        }
-        return tmp;
+        return "\n---------------------" +
+                "\nNumero de la Habitación: " + this.getNumeroHabitacion() + "\nTipo de Habitación: " + this.getTipoHabitacion() + this.getPrecio_habitacion_euros() +
+                "\n---------------------";
     }
 }

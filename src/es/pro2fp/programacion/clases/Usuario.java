@@ -6,15 +6,15 @@ public class Usuario {
  *
  * Como atributos la clase tiene:
  *
- * "id_usuario", que es un identificador único para cada direccion de cada usuario.
+ * "id_usuario", que es un identificador único para cada usuario creado.
  * "nombre" que es el nombre del usuario.
- * "apellido1" y "apellido2" que son los apellidos de los usuarios.
+ * "apellido1" y "apellido2" que son los apellidos del usuario.
  * "telefono" que es el número de contacto principal del usuario.
- * "correoElectronico" que es la dirección con la que se relaciona la cuenta del usuario.
- * "dni" que es el número nacional de identificación.
+ * "correoElectronico" que es la dirección de correo con la que se relaciona la cuenta del usuario.
+ * "dni" que es el número nacional de identificación, uno para cada usuario.
  * "direccion" que es un objeto de tipo Direccion que almacena datos de la residencia del usuario.
- * "administrador" que es un booleano que determina si el usuario es Cliente (False) o Administrador (True).
- * "password" que es la contraseña de acceso de la cuenta del usuario.
+ * "administrador" que es un booleano que determina si el usuario es Cliente (boolean = False) o Administrador (boolean = True).
+ * "password" que es la contraseña encriptada de acceso de la cuenta del usuario.
  */
 	private int id_usuario;
 	private String nombre;
@@ -26,7 +26,23 @@ public class Usuario {
 	private Direccion direccion;
 	private String password;
 	private boolean administrador;
-	
+/**
+ * Constructor de la clase Usuario que recibe como parametros los siguientes atributos y posteriormente 
+ * los iguala a los atributos anteriormente mencionados. 
+ * 
+ * Todos los parametros siguientes coinciden en nombre y definicion con los atributos de la definicion de la clase:
+ * 
+ * @param nombre
+ * @param apellido1
+ * @param apellido2
+ * @param telefono
+ * @param correoElectronico
+ * @param dni
+ * @param direccion
+ * @param administrador
+ * @param id_usuario
+ * @param password
+ */	
 	public Usuario(String nombre, String apellido1, String apellido2, String telefono, String correoElectronico,
 				   String dni, Direccion direccion, boolean administrador, int id_usuario, String password) {
 		this.nombre = nombre;
@@ -40,124 +56,145 @@ public class Usuario {
 		this.id_usuario = id_usuario;
 		this.password = password;
 	}
-
 	/**
-	 *
-	 * @return the getApellido2
+	 * Metodo getApellido2 que devuelve un dato de tipo String
+	 * 
+	 * @return getApellido2 que es el segundo apellido del usuario, un atributo de tipo String
 	 */
 	public String getApellido2() {
 		return apellido2;
 	}
-
 	/**
-	 *
-	 * @param apellido2
+	 * Metodo que recibe como parametro de entrada un String y lo iguala al atributo apellido2 de la clase Usuario
+	 * 
+	 * @param apellido2 String como parametro de entrada
 	 */
 	public void setApellido2(String apellido2) {
 		this.apellido2 = apellido2;
 	}
-
 	/**
+	 * Metodo getTelefono que devuelve un dato tipo String
 	 *
-	 * @return the getTelefono
+	 * @return getTelefono que es el telefono del usuario, un atributo de tipo String 
 	 */
 	public String getTelefono() {
 		return telefono;
 	}
-
 	/**
+	 * Metodo que recibe como parametro de entrada un String y lo iguala al atributo telefono de la clase Usuario
 	 *
-	 * @param telefono
+	 * @param telefono que es el telefono del usuario, un atributo de tipo String
 	 */
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-
 	/**
+	 * Metodo que devuelve un objeto tipo String 
 	 *
-	 * @return the getCorreoElectronico
+	 * @return getCorreoElectronico que es el correo electronico del usuario 
 	 */
 	public String getCorreoElectronico() {
 		return correoElectronico;
 	}
-
 	/**
+	 * Metodo que recibe como parametro un tipo String y lo iguala al atributo de la clase Usuario correoElectronico
 	 *
-	 * @param correoElectronico
+	 * @param correoElectronico dato de tipo String que se iguala al atributo correoElectronico
 	 */
 	public void setCorreoElectronico(String correoElectronico) {
 		this.correoElectronico = correoElectronico;
 	}
-
 	/**
+	 * Metodo que retorna 'True' si el usuario a tratar es administrador o 'False' si el usuario no es administrador
 	 *
-	 * @return the isAdministrador
+	 * @return isAdministrador dato de tipo boolean, devuelve 'True' o 'False'
 	 */
 	public boolean isAdministrador() {
 		return administrador;
 	}
-
 	/**
+	 * Metodo que recibe como parametro de entrada un dato de tipo boolean, 'True' o 'False' y se iguala al atributo administrador
 	 *
-	 * @param administrador
+	 * @param administrador parametro de entrada de tipo boolean
 	 */
 	public void setAdministrador(boolean administrador) {
 		this.administrador = administrador;
 	}
-
 	/**
-	 * @return the nombre
+	 * Metodo que retorna un atributo nombre de tipo String 
+	 * 
+	 * @return nombre que es el nombre del cliente 
 	 */
 	public String getNombre() {
 		return nombre;
 	}
 	/**
-	 * @param nombre the nombre to set
+	 * Metodo que recibe un tipo String como parametro de entrada y lo iguala al atributo nombre de la clase Usuario
+	 * 
+	 * @param nombre que es un String que se iguala al atributo nombre de la clase Usuario
 	 */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 	/**
-	 * @return the apellidos
+	 * Metodo que retorna un String con el primer apellido del usuario
+	 * 
+	 * @return apellido1 que es el primer apellido del usuario
 	 */
 	public String getApellido1() {
 		return apellido1;
 	}
 	/**
-	 * @param apellido1 the apellidos to set
+	 * Metodo recibe como parametro de entrada un String y lo iguala al atributo apellido1 de la clase Usuario
+	 * 
+	 * @param apellido1 que es el primer apellido del usuario
 	 */
 	public void setApellido1(String apellido1) {
 		this.apellido1 = apellido1;
 	}
 	/**
-	 * @return the dni
+	 * Metodo que retorna el dni del usuario como dato de tipo String
+	 * 
+	 * @return dni que es el dni del usuario
 	 */
 	public String getDni() {
 		return dni;
 	}
 	/**
-	 * @param dni the dni to set
+	 * Metodo que recibe como parametro de entrada un dato de tipo String y lo iguala al atributo dni de la clase Usuario
+	 * 
+	 * @param dni que es el parametro String de entrada igualado al atributo dni de la clase Usuario
 	 */
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	/**
-	 * @return the direccion
+	 * Metodo que retorna la direccion del usuario 
+	 * 
+	 * @return direccion que es la direccion del usuario
 	 */
 	public Direccion getDireccion() {
 		return direccion;
 	}
 	/**
-	 * @param direccion the direccion to set
+	 * Metood que recibe como parametro de entrada un objeto de tipo Direccion y lo iguala al atributo direccion de la clase Usuario
+	 * 
+	 * @param direccion que es el objeto de tipo Direccion que se iguala al atributo direccion de la clase Usuario
 	 */
-
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
+	/**
+	 * Metodo toString de la clase Usuario
+	 * 
+	 * @return devuelve todo los atributos de la clase Usuario, en definitiva devuelve todos los datos de un cliente.
+	 */
 	@Override
 	public String toString() {
 		if (this.isAdministrador()) {
 			return "\n---------------------" +
+					"\nUsuario administrador: " +
+					"\n---------------------" +
 					"\nNombre: " + this.getNombre() +
 					"\nApellido 1: " + this.getApellido1() +
 					"\nApellido 2: " + this.getApellido2() +
@@ -169,6 +206,8 @@ public class Usuario {
 					"\nDireccion del integrante del equipo: " + direccion.toString();
 		} else {
 			return "\n---------------------" +
+					"\nUsuario: " + 
+					"\n---------------------" +
 					"\nNombre: " + this.getNombre() +
 					"\nApellido 1: " + this.getApellido1() +
 					"\nApellido 2: " + this.getApellido2() +
