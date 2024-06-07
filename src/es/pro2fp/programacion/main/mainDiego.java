@@ -16,7 +16,7 @@ public class mainDiego {
         con = new Conexion();
 
         //Inicio del Main
-        char gestionMenu = 0;
+        char gestionMenu;
         Scanner sc = new Scanner(System.in);
         Usuario usuario = null;
 
@@ -45,10 +45,29 @@ public class mainDiego {
             }
         } while (gestionMenu != '1' && gestionMenu != '2' && gestionMenu != '0');
 
-        if (gestionMenu == 0) {
+        if (gestionMenu != '0') {
             do {
-                if (usuario.isAdministrador())
+                if (!usuario.isAdministrador()) {
                     gestionMenu = sc.next().charAt(0);
+                    menuUsuario2Cliente();
+                    switch (gestionMenu){
+                        case '1':
+                            menuUsuario2Cliente();
+                            break;
+                        case '2':
+                            menuUsuario3Administrador();
+                            break;
+                        case '0':
+                            System.out.println("Saliendo del Programa...");
+                            break;
+                        default:
+                            System.out.println("El valor introducido no es válido. Introduzca un valor entre '1', '2', y '0'.");
+                            break;
+                    }
+                } else {
+                    gestionMenu = sc.next().charAt(0);
+                    menuUsuario3Administrador();
+                }
                 switch (gestionMenu) {
                     case '1':
                 }
@@ -83,6 +102,18 @@ public class mainDiego {
                 1.- Gestionar Reservas
                 2.- Gestionar Habitaciones
                 0.- Salir del programa
+                ----------------------""");
+    }
+
+    public static void menuAdministrador2 (){
+        System.out.println("""
+                ----------------------
+                1.- Crear Habitación
+                2.- Editar Habitación
+                3.- Borrar Habitación
+                4.- Consultar Habitación
+                
+                M.- Salir al Menú
                 ----------------------""");
     }
 
