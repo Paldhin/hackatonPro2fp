@@ -93,6 +93,16 @@ public class Usuario {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+
+	/**
+	 * Metodo que devuelve un dato de tipo int
+	 *
+	 * @return getId_usuario que es el identificador del usuario
+	 */
+	public int getId_usuario() {
+		return id_usuario;
+	}
+	
 	/**
 	 * Metodo que devuelve un objeto tipo String 
 	 *
