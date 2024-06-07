@@ -11,7 +11,8 @@ package es.pro2fp.programacion.clases;
  * provincia que es la provincia donde esta situada la residencia.
  * ciudad que es la ciudad donde esta la provincia y, evidentemente, la residencia.
  * municipio que es el municipio donde se encuentra la residencia.
- * codigoPostal que es el codigo postal del municipio anteriormente mencionado .
+ * codigoPostal que es el codigo postal del municipio anteriormente mencionado.
+ * pais que es el pais donde se encuentra la ciudad de residencia del usuario.
  */
 public class Direccion {
 
@@ -23,6 +24,7 @@ public class Direccion {
     private String ciudad;
     private String municipio;
     private String codigoPostal;
+    private String pais;
 /**
  * Constructor de la clase Direccion que recibe como parametros los siguientes atributos y posteriormente 
  * los iguala a los atributos anteriormente mencionados. 
@@ -37,8 +39,9 @@ public class Direccion {
  * @param ciudad
  * @param municipio
  * @param codigoPostal
+ * @param pais
  */
-    public Direccion (int id_direccion, String calle, String numero, String puerta, String provincia, String ciudad, String municipio, String codigoPostal){
+    public Direccion (int id_direccion, String calle, String numero, String puerta, String provincia, String ciudad, String municipio, String codigoPostal, String pais){
         this.id_direccion = id_direccion;
         this.calle = calle;
         this.numero = numero;
@@ -47,6 +50,7 @@ public class Direccion {
         this.ciudad = ciudad;
         this.municipio = municipio;
         this.codigoPostal = codigoPostal;
+        this.pais = pais;
     }
     /**
      * Metodo getId_Direccion que devuelve un dato de tipo int 
@@ -177,6 +181,22 @@ public class Direccion {
         this.codigoPostal = codigoPostal;
     }
     /**
+     * Metodo que retorna un dato tipo String
+     * 
+     * @return pais que es el pais de residencia del usuario
+     */
+    public String getPais() {
+        return pais;
+    }
+    /**
+     * Metodo que recibe como parametro de entrada un String y lo iguala al atributo pais de la clase Direccion 
+     * 
+     * @param pais String que se iguala al atributo de la clase Direccion
+     */
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+    /**
      * Metodo toString de la clase Direccion
      * 
      * @return devuelve todo los atributos de la clase Direccion, en definitiva devuelve la direccion del usuario al completo.
@@ -187,8 +207,8 @@ public class Direccion {
                 "\nDireccion: " + 
                 "\n----------------------" + 
         		"\nCalle: " + this.getCalle() + "\nNúmero: " + this.getNumero() + 
-        		"\nPuerta: " + this.getPuerta() + "\nProvincia: " + this.getProvincia() + 
-        		"\nCiudad: " + this.getCiudad() + "\nMunicipio: " + this.getMunicipio() +
-                "\nCódigo Postal: " + this.getCodigoPostal();
+        		"\nPuerta: " + this.getPuerta() + "\nPais: " + this.getPais() + 
+                "\nProvincia: " + this.getProvincia() + "\nCiudad: " + this.getCiudad() + 
+                "\nMunicipio: " + this.getMunicipio() + "\nCódigo Postal: " + this.getCodigoPostal();
     }
 }
