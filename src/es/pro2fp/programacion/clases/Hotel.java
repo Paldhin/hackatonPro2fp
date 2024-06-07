@@ -1,6 +1,6 @@
 package es.pro2fp.programacion.clases;
 
-    public class Hoteles {
+    public class Hotel {
 
         /**
          * Esta es la clase Hoteles, la cual tiene los siguientes atributos definidos y un unico constructor
@@ -19,7 +19,7 @@ package es.pro2fp.programacion.clases;
  * Constructor de la clase Direccion que recibe como parametros los siguientes atributos y posteriormente
  * los iguala a los atributos anteriormente mencionados.
  */
- public Hoteles(int id, Direccion direccion, String nombre){
+ public Hotel(int id, Direccion direccion, String nombre){
             this.id= id;
             this.direccion=direccion;
             this.nombre = nombre;
